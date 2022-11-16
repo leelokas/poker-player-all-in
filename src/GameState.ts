@@ -13,7 +13,7 @@ export class GameState {
     players: Player[];
     community_cards: Card[]
 }
-interface Player {
+export interface Player {
     id: number;
     name: string;
     status: string;
@@ -22,7 +22,7 @@ interface Player {
     bet: number;
     hole_cards?: Card[];
 }
-interface Card {
+export interface Card {
     rank: string;
     suit: string;
 }
