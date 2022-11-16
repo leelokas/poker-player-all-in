@@ -121,7 +121,8 @@ export class Player {
     return ranks.length === 4;
   }
   fullHouse(holeCards: Card[], community_cards: Card[]): boolean {
-    if (!this.threeOfAKind(holeCards, community_cards)) {
+    const allCards = holeCards.concat(community_cards);
+    if (allCards.length < 5 || !this.threeOfAKind(holeCards, community_cards)) {
       false;
     }
     // TODO
@@ -163,12 +164,13 @@ export class Player {
   threeOfAKind(holeCards: Card[], community_cards: Card[]): boolean {
     const ranks = this.mapRanks(holeCards, community_cards);
     const countOccurrences = (arr, val) => arr.reduce((a, v) => (v === val ? a + 1 : a), 0);
+    let threeOfAKindFound = false;
     ranks.forEach(rank => {
       if(countOccurrences(ranks, rank) >= 3){
-        return true;
+        threeOfAKindFound = true;
       }
     });
-    return false;
+    return threeOfAKindFound;
   }
   twopair(holeCards: Card[], community_cards: Card[]): boolean {
     const ranks = this.mapRanks(holeCards, community_cards);
