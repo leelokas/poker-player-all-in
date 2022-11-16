@@ -16,6 +16,8 @@ export class Player {
     let r = this.rank(gameState);
     if (r > 30) {
       betCallback(this.potBet(gameState));
+    } else if (r > 0) {
+      betCallback(this.checkCallAmount(gameState));
     } else {
       betCallback(0);
     }
@@ -51,6 +53,10 @@ export class Player {
     });
     const bet = (gameState.pot + allPlayers)*2;
     return bet;
+  }
+
+  checkCallAmount(gameState: GameState): number {
+    return gameState.current_buy_in - this.findMe(gameState).bet;
   }
 
   public showdown(gameState: any): void {
