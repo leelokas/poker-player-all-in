@@ -137,7 +137,7 @@ export class Player {
   }
 
   straighFlush(holeCards: Card[], community_cards: Card[]): boolean {
-    return false;
+    return this.straight(holeCards, community_cards) && this.flush(holeCards, community_cards);
   }
   fourOfAKind(holeCards: Card[], community_cards: Card[]): boolean {
     const ranks = this.mapRanks(holeCards, community_cards);
