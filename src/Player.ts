@@ -24,10 +24,20 @@ export class Player {
   }
 
   preflop(gameState: GameState, betCallback: (bet: number) => void) {
-    if(this.isPreflopBetHand(this.findMe(gameState).hole_cards)){
-      betCallback(this.potBet(gameState));
+    let me = this.findMe(gameState);
+    if (me.bet > (gameState.small_blind*2)) {
+      // 3bet
+      if (me.hole_cards[0].rank === me.hole_cards[1].rank) {
+        betCallback(this.potBet(gameState));
+      } else {
+        betCallback(this.checkCallAmount(gameState));        
+      }
     } else {
-      betCallback(0);
+      if(this.isPreflopBetHand(this.findMe(gameState).hole_cards)){
+        betCallback(this.potBet(gameState));
+      } else {
+        betCallback(0);
+      }  
     }
   }
 
