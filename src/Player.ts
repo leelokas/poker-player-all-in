@@ -21,7 +21,7 @@ export class Player {
   }
 
   isPair(card: Card[]): Boolean{
-    return card[0].suit === card[1].suit || card[0].rank === card[1].rank
+    return card[0].suit === card[0].suit || card[1].rank === card[1].rank
   }
 
   potBet(gameState: GameState): number {
