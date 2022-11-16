@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', ({}, res) => res.send(200, 'OK'));
 
 app.post('/', (req, res) => {
+    console.log(req.body);
     if (req.body.action === 'bet_request') {
         player.betRequest(JSON.parse(req.body.game_state), bet => res.status(200).send(bet.toString()));
     } else if (req.body.action === 'showdown') {
