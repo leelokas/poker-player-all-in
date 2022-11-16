@@ -248,7 +248,7 @@ export class Player {
    * @param community_cards
    */
   onepair(holeCards: Card[], community_cards: Card[]): boolean {
-    const ranks = this.mapRanks(holeCards, []);
+    const ranks = this.mapRanks(holeCards, community_cards);
     if (this.hasPair(holeCards)) {
       return true;
     }
