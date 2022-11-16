@@ -1,7 +1,6 @@
 
 import e = require('express');
 import { GameState, Card } from './GameState';
-import { Card } from './GameState';
 
 export class Player {
   public betRequest(gameState: GameState, betCallback: (bet: number) => void): void {
