@@ -8,7 +8,16 @@ export class Player {
     if (gameState.community_cards && gameState.community_cards.length < 1) {
       this.preflop(gameState, betCallback);
     } else {
-      betCallback(gameState.current_buy_in + gameState.minimum_raise);
+      this.postFlop(gameState, betCallback);
+    }
+  }
+  
+  postFlop(gameState: GameState, betCallback: (bet: number) => void) {
+    let r = this.rank(gameState);
+    if (r > 30) {
+      betCallback(this.potBet(gameState));
+    } else {
+      betCallback(0);
     }
   }
 
@@ -48,15 +57,21 @@ export class Player {
     let holeCards = this.findMe(gameState).hole_cards;
     let community_cards = gameState.community_cards;
     if (this.straighFlush(holeCards, community_cards)) {
+      return 100;
     } else if (this.fourOfAKind(holeCards, community_cards)) {
+      return 90;
     } else if (this.fullHouse(holeCards, community_cards)) {
-
+      return 80;
     } else if (this.flush(holeCards, community_cards)) {
+      return 70;
     } else if (this.straight(holeCards, community_cards)) {
+      return 60;
     } else if (this.tripple(holeCards, community_cards)) {
+      return 50;
     } else if (this.twopair(holeCards, community_cards)) {
+      return 40;
     } else if (this.onepair(holeCards, community_cards)) {
-
+      return 30;
     }
     return 0;
   }
