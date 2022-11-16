@@ -108,7 +108,11 @@ export class Player {
     } else if (this.twopair(holeCards, community_cards)) {
       return 40;
     } else if (this.onepair(holeCards, community_cards)) {
-      return 30;
+      if(this.isJQKA(this.findMe(gameState).hole_cards[0])
+      || this.isJQKA(this.findMe(gameState).hole_cards[1])){
+        return 35;
+      }
+      return 30; 
     }
     return 0;
   }
