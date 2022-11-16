@@ -156,9 +156,12 @@ export class Player {
     const vals = Object.keys(countRanks).map(key => countRanks[key]).sort(); // [1, 2, 3]
     return (vals.indexOf(2) > -1 && vals.indexOf(3) > -1);
   }
+
   flush(holeCards: Card[], community_cards: Card[]): boolean {
-    return false;
+    const suits = this.mapSuits(holeCards, community_cards);
+    return this.mapFlush(suits);
   }
+
   straight(holeCards: Card[], community_cards: Card[]): boolean {
     let mapped  = [];
     const allCards = holeCards.concat(community_cards);
@@ -212,6 +215,27 @@ export class Player {
   private mapRanks(holeCards: Card[], community_cards: Card[]): string[] {
     const allCards = holeCards.concat(community_cards);
     return allCards.map(card => card.rank);
+  }
+
+  private mapSuits(holeCards: Card[], community_cards: Card[]) {
+    const allCards = holeCards.concat(community_cards);
+    return allCards.map(card => card.suit);
+  }
+
+  private mapFlush(suits): boolean{
+    let coincidences = [0,0,0,0];
+    suits.forEach(suit => {
+      if(suit==='spades'){
+        coincidences[0] += 1;
+      }else if(suit==='hearts'){
+        coincidences[1] += 1;
+      }else if(suit==='diamonds'){
+        coincidences[2] += 1;
+      }if(suit==='clubs'){
+        coincidences[3] += 1;
+      }
+    });
+    return (coincidences.filter(c => c >= 5).length > 0);
   }
 };
 
