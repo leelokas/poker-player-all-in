@@ -1,13 +1,13 @@
 
-export class gameState{
+export class GameState{
     tournamentId: string;
     gameId: string;
     round: number;
     betIndex: number;
     smallBlind: number;
-    currentBuyIn:number;
+    current_buy_in:number;
     pot: number;
-    minimumRais: number;
+    minimum_raise: number;
     dealer: number;
     orbits: number;
     inAction: number;
