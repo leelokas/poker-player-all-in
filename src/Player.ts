@@ -22,7 +22,9 @@ export class Player {
 
   }
 
-
+  findMe(gameState: GameState){
+    return gameState.players[gameState.in_action];
+  }
 };
 
 export default Player;
