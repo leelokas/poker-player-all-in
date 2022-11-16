@@ -15,10 +15,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', ({}, res) => res.send(200, 'OK'));
 
 app.post('/', (req, res) => {
-    console.log(req.body);
+    console.log('Req body is:', req.body);
     if (req.body.action === 'bet_request') {
         const betCallback = bet => {
-            console.log(bet);
+            console.log('Our bet is:', bet);
             res.status(200).send(bet.toString());
         }
         player.betRequest(JSON.parse(req.body.game_state), betCallback);

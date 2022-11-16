@@ -2,7 +2,7 @@
 import { GameState } from './GameState';
 export class Player {
   public betRequest(gameState: GameState, betCallback: (bet: number) => void): void {
-    console.log(gameState);
+    console.log('Game state is:', gameState);
     betCallback(gameState.current_buy_in + gameState.minimum_raise);
     if (gameState.community_cards && gameState.community_cards.length < 1) {
       this.preflop(gameState, betCallback);
