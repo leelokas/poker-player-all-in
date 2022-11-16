@@ -100,21 +100,23 @@ export class Player {
     return false;
   }
   tripple(holeCards: Card[], community_cards: Card[]): boolean {
-    return false;
+    const ranks = this.mapRanks(holeCards, community_cards);
+    return ranks.length === 3;
   }
   twopair(holeCards: Card[], community_cards: Card[]): boolean {
-    const allCards = holeCards.concat(community_cards);
-    const ranks = allCards.map(card => card.rank);
-    const pairs = ranks.filter((item, index) => ranks.indexOf(item) != index);
+    const pairs = this.mapRanks(holeCards, community_cards);
     return pairs.length === 2;
   }
   onepair(holeCards: Card[], community_cards: Card[]): boolean {
-    const allCards = holeCards.concat(community_cards);
-    const ranks = allCards.map(card => card.rank);
-    const pairs = ranks.filter((item, index) => ranks.indexOf(item) != index);
+    const pairs = this.mapRanks(holeCards, community_cards);
     return pairs.length >= 1;
   }
 
+  private mapRanks(holeCards: Card[], community_cards: Card[]) {
+    const allCards = holeCards.concat(community_cards);
+    const ranks = allCards.map(card => card.rank);
+    return ranks.filter((item, index) => ranks.indexOf(item) != index);
+  }
 };
 
 export default Player;
