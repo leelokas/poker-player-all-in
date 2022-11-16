@@ -11,7 +11,7 @@ export class Player {
       this.postFlop(gameState, betCallback);
     }
   }
-  
+
   postFlop(gameState: GameState, betCallback: (bet: number) => void) {
     let r = this.rank(gameState);
     if (r > 30) {
@@ -30,14 +30,14 @@ export class Player {
       if (this.isPair(me.hole_cards)) {
         betCallback(this.potBet(gameState));
       } else {
-        betCallback(this.checkCallAmount(gameState));        
+        betCallback(this.checkCallAmount(gameState));
       }
     } else {
       if(this.isPreflopBetHand(this.findMe(gameState).hole_cards)){
         betCallback(this.potBet(gameState));
       } else {
         betCallback(0);
-      }  
+      }
     }
   }
 
@@ -103,7 +103,7 @@ export class Player {
       return 70;
     } else if (this.straight(holeCards, community_cards)) {
       return 60;
-    } else if (this.tripple(holeCards, community_cards)) {
+    } else if (this.threeOfAKind(holeCards, community_cards)) {
       return 50;
     } else if (this.twopair(holeCards, community_cards)) {
       return 40;
@@ -121,6 +121,10 @@ export class Player {
     return ranks.length === 4;
   }
   fullHouse(holeCards: Card[], community_cards: Card[]): boolean {
+    if (!this.threeOfAKind(holeCards, community_cards)) {
+      false;
+    }
+    // TODO
     return false;
   }
   flush(holeCards: Card[], community_cards: Card[]): boolean {
@@ -131,13 +135,13 @@ export class Player {
     const allCards = holeCards.concat(community_cards);
     allCards.forEach(c => {
       if (c.rank === 'J') {
-        mapped.push(11);        
+        mapped.push(11);
       } else if (c.rank === 'Q') {
-          mapped.push(12);        
+          mapped.push(12);
       } else if (c.rank === 'K') {
-          mapped.push(13);        
+          mapped.push(13);
       } else if (c.rank === 'A') {
-          mapped.push(14);        
+          mapped.push(14);
       } else {
         mapped.push(Number(c.rank))
       }
@@ -156,7 +160,7 @@ export class Player {
     }
     return count > 4;
   }
-  tripple(holeCards: Card[], community_cards: Card[]): boolean {
+  threeOfAKind(holeCards: Card[], community_cards: Card[]): boolean {
     const ranks = this.mapRanks(holeCards, community_cards);
     const countOccurrences = (arr, val) => arr.reduce((a, v) => (v === val ? a + 1 : a), 0);
     ranks.forEach(rank => {
