@@ -25,38 +25,54 @@ export class Player {
 
   preflop(gameState: GameState, betCallback: (bet: number) => void) {
     let me = this.findMe(gameState);
+    const shortHanded = gameState.players.length < 4;
     if (me.bet > (gameState.small_blind*2)) {
       // 3bet
-      if (this.isPair(me.hole_cards)) {
+      if (this.is3Bet(me.hole_cards, shortHanded)) {
         betCallback(this.potBet(gameState));
       } else {
+        // call
         betCallback(this.checkCallAmount(gameState));
       }
     } else {
-      if(this.isPreflopBetHand(this.findMe(gameState).hole_cards)){
+      if(this.isPreflopBetHand(this.findMe(gameState).hole_cards, shortHanded)){
         betCallback(this.potBet(gameState));
       } else {
-        betCallback(0);
+        betCallback(0);// fold
       }
     }
   }
 
-  isPair(card: Card[]) {
-    return card[0].rank === card[1].rank;
+  is3Bet(card: Card[], shorhanded: boolean) {
+    if (shorhanded) {
+      return card[0].rank === card[1].rank;
+    }
+    return card[0].rank === card[1].rank && this.isJQKA(card[0]) && this.isJQKA(card[1]);
   }
 
-  isPreflopBetHand(card: Card[]): Boolean{
+  isPreflopBetHand(card: Card[], shortHanded: boolean): Boolean{
     return this.isJQKA(card[0]) && this.isJQKA(card[1])
-        || this.isPair(card)
-        || (this.hasAce(card) && this.isSuited(card));
+        || this.is3Bet(card, shortHanded)
+        || (this.hasAce(card) && this.isSuited(card))
+        || (shortHanded && this.hasAce(card))
+        || (shortHanded && this.hasKing(card) && this.isSuited(card))
+        || (shortHanded && this.is9OrBetter(card[0]) && this.is9OrBetter(card[1]));
   }
 
   isSuited(card: Card[]): boolean{
     return card[0].suit === card[1].suit;
   }
 
+  hasKing(card: Card[]): boolean{
+    return card[0].rank === "K" || card[1].rank === "K";
+  }
+
   hasAce(card: Card[]): boolean{
-    return card[0].rank === "A" || card[1].rank === "A";;
+    return card[0].rank === "A" || card[1].rank === "A";
+  }
+
+  is9OrBetter(card: Card): boolean {
+    return this.isJQKA(card) || card.rank === '10' || card.rank === '9';
   }
 
   isJQKA(card: Card): boolean{
@@ -190,13 +206,4 @@ export class Player {
     return allCards.map(card => card.rank);
   }
 };
-
-export default Player;
-function straighFlush(holeCards: Card[], community_cards: Card[]) {
-  throw new Error('Function not implemented.');
-}
-
-function fourOfAKind(holeCards: Card[], community_cards: Card[]) {
-  throw new Error('Function not implemented.');
-}
 
