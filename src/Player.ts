@@ -127,9 +127,35 @@ export class Player {
     return false;
   }
   straight(holeCards: Card[], community_cards: Card[]): boolean {
-    const ranks = this.mapRanks(holeCards, community_cards);
+    let mapped  = [];
+    const allCards = holeCards.concat(community_cards);
+    allCards.forEach(c => {
+      if (c.rank === 'J') {
+        mapped.push(11);        
+      } else if (c.rank === 'Q') {
+          mapped.push(12);        
+      } else if (c.rank === 'K') {
+          mapped.push(13);        
+      } else if (c.rank === 'A') {
+          mapped.push(14);        
+      } else {
+        mapped.push(Number(c.rank))
+      }
+    });
+    mapped.sort((a,b)=>a-b);
+    let curr = mapped[0];
+    let count  = 1;
+    for (let i = 1; i< mapped.length; i++) {
+      const r = mapped[i];
+      if (curr === r || (curr+1) === r) {
+        count++
+      } else {
+        count = 1;
+      }
+      curr = r;
+    }
 
-    return false;
+    return count > 4;
   }
   tripple(holeCards: Card[], community_cards: Card[]): boolean {
     const ranks = this.mapRanks(holeCards, community_cards);
