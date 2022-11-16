@@ -154,11 +154,16 @@ export class Player {
       }
       curr = r;
     }
-
     return count > 4;
   }
   tripple(holeCards: Card[], community_cards: Card[]): boolean {
     const ranks = this.mapRanks(holeCards, community_cards);
+    const countOccurrences = (arr, val) => arr.reduce((a, v) => (v === val ? a + 1 : a), 0);
+    ranks.forEach(rank => {
+      if(countOccurrences(ranks, rank) >= 3){
+        return true;
+      }
+    });
     return false;
   }
   twopair(holeCards: Card[], community_cards: Card[]): boolean {
