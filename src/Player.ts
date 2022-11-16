@@ -203,15 +203,43 @@ export class Player {
     });
     return threeOfAKindFound;
   }
+
+  /**
+   * Returns true when there are exactly 2 pairs
+   * @param holeCards
+   * @param community_cards
+   */
   twopair(holeCards: Card[], community_cards: Card[]): boolean {
-    const ranks = this.mapRanks(holeCards, community_cards);
-    return ranks.filter((item, index) => ranks.indexOf(item) != index).length === 2;
-  }
-  onepair(holeCards: Card[], community_cards: Card[]): boolean {
-    const ranks = this.mapRanks(holeCards, community_cards);
-    return ranks.filter((item, index) => ranks.indexOf(item) != index).length >= 1;
+    const ranks = this.mapRanks(holeCards, community_cards); // E.g. ['1', '1', 'A', '2', 'Q', '2']
+    let countRanks = {}; // E.g. {'1': 2, '2': 2, 'A': 1, 'Q': 1}
+    for (let rank of ranks){
+      countRanks[rank] = (countRanks[rank] || 0) + 1;
+    }
+    const vals = Object.keys(countRanks).map(key => countRanks[key]).sort(); // [1, 1, 2, 2]
+    return vals.filter(val => val === 2).length === 2;
   }
 
+  /**
+   * Returns true when there's exactly 1 pair
+   * @param holeCards
+   * @param community_cards
+   */
+  onepair(holeCards: Card[], community_cards: Card[]): boolean {
+    const ranks = this.mapRanks(holeCards, community_cards); // E.g. ['1', '2', 'A', '2', 'Q', '5']
+    let countRanks = {}; // E.g. {'1': 1, '2': 2, 'A': 1, 'Q': 1, '5': 1}
+    for (let rank of ranks){
+      countRanks[rank] = (countRanks[rank] || 0) + 1;
+    }
+    const vals = Object.keys(countRanks).map(key => countRanks[key]).sort(); // [1, 1, 1, 1, 2]
+    return vals.filter(val => val === 2).length === 1;
+  }
+
+  /**
+   * Return array of strings with rank of each card
+   * @param holeCards
+   * @param community_cards
+   * @private
+   */
   private mapRanks(holeCards: Card[], community_cards: Card[]): string[] {
     const allCards = holeCards.concat(community_cards);
     return allCards.map(card => card.rank);
