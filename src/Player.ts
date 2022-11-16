@@ -23,7 +23,7 @@ export class Player {
         allPlayers += player.bet
       }
     });
-    const bet = (gameState.pot - allPlayers)*2
+    const bet = (gameState.pot + allPlayers)*2
     return bet;
   }
 
