@@ -117,7 +117,8 @@ export class Player {
     return false;
   }
   fourOfAKind(holeCards: Card[], community_cards: Card[]): boolean {
-    return false;
+    const ranks = this.mapRanks(holeCards, community_cards);
+    return ranks.length === 4;
   }
   fullHouse(holeCards: Card[], community_cards: Card[]): boolean {
     return false;
