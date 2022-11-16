@@ -47,16 +47,20 @@ export class Player {
     }
   }
 
+  isPair(card: Card[]) : boolean {
+    return card[0].rank === card[1].rank
+  }
+
   is3Bet(card: Card[], shorhanded: boolean) {
     if (shorhanded) {
-      return card[0].rank === card[1].rank;
+      return this.isPair(card);
     }
-    return card[0].rank === card[1].rank && this.isJQKA(card[0]) && this.isJQKA(card[1]);
+    return this.isPair(card) && this.isJQKA(card[0]) && this.isJQKA(card[1]);
   }
 
   isPreflopBetHand(card: Card[], shortHanded: boolean): Boolean{
     return this.isJQKA(card[0]) && this.isJQKA(card[1])
-        || this.is3Bet(card, shortHanded)
+        || this.isPair(card)
         || (this.hasAce(card) && this.isSuited(card))
         || (shortHanded && this.hasAce(card))
         || (shortHanded && this.hasKing(card) && this.isSuited(card))
