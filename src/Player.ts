@@ -26,7 +26,9 @@ export class Player {
   preflop(gameState: GameState, betCallback: (bet: number) => void) {
     let me = this.findMe(gameState);
     const shortHanded = gameState.players.length < 4;
+    console.log("Preflop: " + shortHanded + " " + me.bet) ;
     if (me.bet > (gameState.small_blind*2)) {
+      console.log("Preflop 3bet: " + shortHanded + " " + me.bet) ;
       // 3bet
       if (this.is3Bet(me.hole_cards, shortHanded)) {
         betCallback(this.potBet(gameState));
@@ -35,6 +37,7 @@ export class Player {
         betCallback(this.checkCallAmount(gameState));
       }
     } else {
+      console.log("Preflop bet: " + shortHanded + " " + me.bet) ;
       if(this.isPreflopBetHand(this.findMe(gameState).hole_cards, shortHanded)){
         betCallback(this.potBet(gameState));
       } else {
