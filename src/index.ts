@@ -3,7 +3,7 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { Player } from './Player';
 
-const VERSION = "Default TypeScript folding player";
+const VERSION = "minraise";
 
 const app = express();
 const player = new Player();
