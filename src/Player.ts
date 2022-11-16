@@ -27,7 +27,7 @@ export class Player {
     let me = this.findMe(gameState);
     if (me.bet > (gameState.small_blind*2)) {
       // 3bet
-      if (me.hole_cards[0].rank === me.hole_cards[1].rank) {
+      if (this.isPair(me.hole_cards)) {
         betCallback(this.potBet(gameState));
       } else {
         betCallback(this.checkCallAmount(gameState));        
@@ -41,9 +41,22 @@ export class Player {
     }
   }
 
+  isPair(card: Card[]) {
+    return card[0].rank === card[1].rank;
+  }
+
   isPreflopBetHand(card: Card[]): Boolean{
     return this.isJQKA(card[0]) && this.isJQKA(card[1])
-        || card[0].rank === card[1].rank
+        || this.isPair(card)
+        || (this.hasAce(card) && this.isSuited(card));
+  }
+
+  isSuited(card: Card[]): boolean{
+    return card[0].suit === card[1].suit;
+  }
+
+  hasAce(card: Card[]): boolean{
+    return card[0].rank === "A" || card[1].rank === "A";;
   }
 
   isJQKA(card: Card): boolean{
