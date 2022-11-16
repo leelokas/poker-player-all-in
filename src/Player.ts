@@ -28,12 +28,13 @@ export class Player {
     const shortHanded = gameState.players.length < 4;
     console.log("Preflop: " + shortHanded + " " + me.bet) ;
     if (gameState.bet_index > 5) {
-      console.log("Preflop 3bet: " + shortHanded + " " + me.bet) ;
       // 3bet
       if (this.is3Bet(me.hole_cards, shortHanded)) {
+        console.log("Preflop 3bet bet: " + this.potBet(gameState)) ;
         betCallback(this.potBet(gameState));
       } else {
         // call
+        console.log("Preflop 3bet call: " + this.checkCallAmount(gameState)) ;
         betCallback(this.checkCallAmount(gameState));
       }
     } else {
