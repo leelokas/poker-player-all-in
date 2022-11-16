@@ -3,7 +3,7 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { Player } from './Player';
 
-const VERSION = "shorthandedv2";
+const VERSION = "shorthandedv3";
 
 const app = express();
 const player = new Player();

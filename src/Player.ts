@@ -27,7 +27,7 @@ export class Player {
     let me = this.findMe(gameState);
     const shortHanded = gameState.players.length < 4;
     console.log("Preflop: " + shortHanded + " " + me.bet) ;
-    if (gameState.bet_index > 5) {
+    if (me.bet > (gameState.small_blind*2)) {
       // 3bet
       if (this.is3Bet(me.hole_cards, shortHanded)) {
         console.log("Preflop 3bet bet: " + this.potBet(gameState)) ;
