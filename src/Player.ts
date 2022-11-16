@@ -29,11 +29,11 @@ export class Player {
     // pot + all players minus us )*2
     let allPlayers = 0;
     gameState.players.forEach(player => {
-      if(player.hole_cards.length == 0){
+      if(player.hole_cards?.length === 0){
         allPlayers += player.bet
       }
     });
-    const bet = (gameState.pot + allPlayers)*2
+    const bet = (gameState.pot + allPlayers)*2;
     return bet;
   }
 
@@ -84,6 +84,7 @@ export class Player {
     return false;
   }
   onepair(holeCards: Card[], community_cards: Card[]): boolean {
+
     return false;
   }
 
