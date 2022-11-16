@@ -113,6 +113,18 @@ export class Player {
 
   }
 
+  isDealerOrSmallBtnAndOnlyOneLeft(gameState: GameState): boolean{
+    return (gameState.dealer === gameState.in_action
+      || (gameState.dealer+1)%(gameState.players.length) === gameState.in_action)
+      && this.onlyOneLeft(gameState);
+  }
+
+  private onlyOneLeft(gameState: GameState) {
+    return gameState.players.filter(player => {
+      player.status === "active";
+    }).length === 1;
+  }
+
   findMe(gameState: GameState){
     return gameState.players[gameState.in_action];
   }
@@ -136,7 +148,7 @@ export class Player {
       return 40;
     } else if (this.onepair(holeCards, community_cards)) {
       if(this.isJQKA(this.findMe(gameState).hole_cards[0])
-      || this.isJQKA(this.findMe(gameState).hole_cards[1])){
+        || this.isJQKA(this.findMe(gameState).hole_cards[1])){
         return 35;
       }
       return 30;
@@ -287,5 +299,6 @@ export class Player {
     });
     return (coincidences.filter(c => c >= 5).length > 0);
   }
+
 };
 
