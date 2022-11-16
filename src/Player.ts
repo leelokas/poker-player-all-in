@@ -128,7 +128,7 @@ export class Player {
       || this.isJQKA(this.findMe(gameState).hole_cards[1])){
         return 35;
       }
-      return 30; 
+      return 30;
     }
     return 0;
   }
@@ -142,11 +142,16 @@ export class Player {
   }
   fullHouse(holeCards: Card[], community_cards: Card[]): boolean {
     const allCards = holeCards.concat(community_cards);
-    if (allCards.length < 5 || !this.threeOfAKind(holeCards, community_cards)) {
-      false;
+    if (allCards.length < 5) {
+      return false;
     }
-    // TODO
-    return false;
+    const ranks = this.mapRanks(holeCards, community_cards); // E.g. ['1', '1', 'A', 'A', 'A', '2']
+    let countRanks = {}; // E.g. {'1': 2, '2': 1, 'A': 3}
+    for (let rank of ranks){
+      countRanks[rank] = (countRanks[rank] || 0) + 1;
+    }
+    const vals = Object.keys(countRanks).map(key => countRanks[key]).sort(); // [1, 2, 3]
+    return (vals.indexOf(2) > -1 && vals.indexOf(3) > -1);
   }
   flush(holeCards: Card[], community_cards: Card[]): boolean {
     return false;
@@ -201,7 +206,7 @@ export class Player {
     return ranks.filter((item, index) => ranks.indexOf(item) != index).length >= 1;
   }
 
-  private mapRanks(holeCards: Card[], community_cards: Card[]) {
+  private mapRanks(holeCards: Card[], community_cards: Card[]): string[] {
     const allCards = holeCards.concat(community_cards);
     return allCards.map(card => card.rank);
   }
