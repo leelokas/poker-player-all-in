@@ -228,12 +228,26 @@ export class Player {
   }
 
   /**
-   * Returns true when there's exactly 1 pair
+   * Returns true when there's exactly 1 pair, excluding community card pairs
    * @param holeCards
    * @param community_cards
    */
   onepair(holeCards: Card[], community_cards: Card[]): boolean {
     const ranks = this.mapRanks(holeCards, []);
+    if (this.hasPair(holeCards)) {
+      return true;
+    }
+    if (this.hasPair(ranks)) {
+      return !this.hasPair(community_cards);
+    }
+    return false;
+  }
+
+  /**
+   * Returns true when there's exactly 1 pair
+   * @param ranks
+   */
+  hasPair(ranks) {
     let countRanks = {}; // E.g. {'1': 1, '2': 2, 'A': 1, 'Q': 1, '5': 1}
     for (let rank of ranks){
       countRanks[rank] = (countRanks[rank] || 0) + 1;
