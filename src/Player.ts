@@ -30,7 +30,15 @@ export class Player {
   }
 
   isPreflopBetHand(card: Card[]): Boolean{
-    return card[0].suit === card[1].suit || card[0].rank === card[1].rank
+    return this.isJQKA(card[0]) && this.isJQKA(card[1])
+        || card[0].rank === card[1].rank
+  }
+
+  isJQKA(card: Card): boolean{
+    return card.rank === "J"
+        || card.rank === "Q"
+        || card.rank === "K"
+        || card.rank === "A";
   }
 
   potBet(gameState: GameState): number {
