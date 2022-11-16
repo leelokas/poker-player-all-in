@@ -13,14 +13,14 @@ export class Player {
   }
 
   preflop(gameState: GameState, betCallback: (bet: number) => void) {
-    if(this.isPair(this.findMe(gameState).hole_cards)){
+    if(this.isPreflopBetHand(this.findMe(gameState).hole_cards)){
       betCallback(this.potBet(gameState));
     } else {
       betCallback(0);
     }
   }
 
-  isPair(card: Card[]): Boolean{
+  isPreflopBetHand(card: Card[]): Boolean{
     return card[0].suit === card[1].suit || card[0].rank === card[1].rank
   }
 
