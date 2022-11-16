@@ -13,7 +13,10 @@ export class Player {
 
   preflop(gameState: GameState, betCallback: (bet: number) => void) {
     betCallback(gameState.minimum_raise);
->>>>>>> Stashed changes
+  }
+
+  potBet(gameState: GameState): number {
+    return gameState.minimum_raise;
   }
 
   public showdown(gameState: any): void {
