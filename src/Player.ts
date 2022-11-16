@@ -53,7 +53,7 @@ export class Player {
 
   is3Bet(card: Card[], shorhanded: boolean) {
     if (shorhanded) {
-      return this.isPair(card);
+      return this.isPair(card) || (this.hasAce(card) && this.hasKing(card));
     }
     return this.isPair(card) && this.isJQKA(card[0]) && this.isJQKA(card[1]);
   }
@@ -62,8 +62,7 @@ export class Player {
     return this.isJQKA(card[0]) && this.isJQKA(card[1])
         || this.isPair(card)
         || (this.hasAce(card) && this.isSuited(card))
-        || (shortHanded && this.hasAce(card))
-        || (shortHanded && this.hasKing(card) && this.isSuited(card))
+        || (shortHanded && this.hasPaint(card))
         || (shortHanded && this.is9OrBetter(card[0]) && this.is9OrBetter(card[1]));
   }
 
@@ -73,6 +72,10 @@ export class Player {
 
   hasKing(card: Card[]): boolean{
     return card[0].rank === "K" || card[1].rank === "K";
+  }
+
+  hasPaint(card: Card[]): boolean{
+    return this.isJQKA(card[0]) || this.isJQKA(card[1])
   }
 
   hasAce(card: Card[]): boolean{
