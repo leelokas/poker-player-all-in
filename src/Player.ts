@@ -80,11 +80,16 @@ export class Player {
     return false;
   }
   twopair(holeCards: Card[], community_cards: Card[]): boolean {
-    return false;
+    const allCards = holeCards.concat(community_cards);
+    const ranks = allCards.map(card => card.rank);
+    const pairs = ranks.filter((item, index) => ranks.indexOf(item) != index);
+    return pairs.length === 2;
   }
   onepair(holeCards: Card[], community_cards: Card[]): boolean {
-
-    return false;
+    const allCards = holeCards.concat(community_cards);
+    const ranks = allCards.map(card => card.rank);
+    const pairs = ranks.filter((item, index) => ranks.indexOf(item) != index);
+    return pairs.length >= 1;
   }
 
 };
