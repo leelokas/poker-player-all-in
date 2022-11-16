@@ -226,7 +226,7 @@ export class Player {
    * @param community_cards
    */
   onepair(holeCards: Card[], community_cards: Card[]): boolean {
-    const ranks = this.mapRanks(holeCards, community_cards); // E.g. ['1', '2', 'A', '2', 'Q', '5']
+    const ranks = this.mapRanks(holeCards, []);
     let countRanks = {}; // E.g. {'1': 1, '2': 2, 'A': 1, 'Q': 1, '5': 1}
     for (let rank of ranks){
       countRanks[rank] = (countRanks[rank] || 0) + 1;
