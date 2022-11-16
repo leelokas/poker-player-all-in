@@ -1,6 +1,6 @@
 
 import e = require('express');
-import { GameState } from './GameState';
+import { GameState, Card } from './GameState';
 import { Card } from './GameState';
 
 export class Player {
@@ -45,6 +45,57 @@ export class Player {
   findMe(gameState: GameState){
     return gameState.players[gameState.in_action];
   }
+
+  rank(gameState:GameState): number {
+    let holeCards = this.findMe(gameState).hole_cards;
+    let community_cards = gameState.community_cards;
+    if (this.straighFlush(holeCards, community_cards)) {
+    } else if (this.fourOfAKind(holeCards, community_cards)) {
+    } else if (this.fullHouse(holeCards, community_cards)) {
+
+    } else if (this.flush(holeCards, community_cards)) {
+    } else if (this.straight(holeCards, community_cards)) {
+    } else if (this.tripple(holeCards, community_cards)) {
+    } else if (this.twopair(holeCards, community_cards)) {
+    } else if (this.onepair(holeCards, community_cards)) {
+
+    }
+    return 0;
+  }
+
+  straighFlush(holeCards: Card[], community_cards: Card[]): boolean {
+    return false;
+  }
+  fourOfAKind(holeCards: Card[], community_cards: Card[]): boolean {
+    return false;
+  }
+  fullHouse(holeCards: Card[], community_cards: Card[]): boolean {
+    return false;
+  }
+  flush(holeCards: Card[], community_cards: Card[]): boolean {
+    return false;
+  }
+  straight(holeCards: Card[], community_cards: Card[]): boolean {
+    return false;
+  }
+  tripple(holeCards: Card[], community_cards: Card[]): boolean {
+    return false;
+  }
+  twopair(holeCards: Card[], community_cards: Card[]): boolean {
+    return false;
+  }
+  onepair(holeCards: Card[], community_cards: Card[]): boolean {
+    return false;
+  }
+
 };
 
 export default Player;
+function straighFlush(holeCards: Card[], community_cards: Card[]) {
+  throw new Error('Function not implemented.');
+}
+
+function fourOfAKind(holeCards: Card[], community_cards: Card[]) {
+  throw new Error('Function not implemented.');
+}
+
