@@ -32,7 +32,7 @@ export class Player {
       if (this.is3Bet(me.hole_cards, shortHanded)) {
         console.log("Preflop 3bet bet: " + this.potBet(gameState)) ;
         betCallback(this.potBet(gameState));
-      } else if (this.isPair(me.hole_cards) || (this.hasAce(me.hole_cards) && this.hasKing(me.hole_cards)) {
+      } else if (this.isPair(me.hole_cards) || (this.hasAce(me.hole_cards) && this.hasKing(me.hole_cards))) {
         console.log("Preflop 3bet call: " + this.checkCallAmount(gameState)) ;
         betCallback(this.checkCallAmount(gameState));
       } else {
