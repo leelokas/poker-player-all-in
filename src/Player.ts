@@ -1,4 +1,5 @@
 
+import e = require('express');
 import { GameState } from './GameState';
 export class Player {
   public betRequest(gameState: GameState, betCallback: (bet: number) => void): void {
@@ -15,7 +16,15 @@ export class Player {
   }
 
   potBet(gameState: GameState): number {
-    return gameState.minimum_raise;
+    // pot + all players minus us )*2
+    let allPlayers = 0;
+    gameState.players.forEach(player => {
+      if(player.hole_cards.length == 0){
+        allPlayers += player.bet
+      }
+    });
+    const bet = (gameState.pot - allPlayers)*2
+    return bet;
   }
 
   public showdown(gameState: any): void {
